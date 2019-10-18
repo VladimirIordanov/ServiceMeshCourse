@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: books-round-robin
+spec:
+  host: books
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+  subsets:
+    - name: books-round-robin
+      labels:
+        version: v1
+      trafficPolicy:
+        loadBalancer:
+          simple: ROUND_ROBIN
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: authors-random
+spec:
+  host: authors
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+  subsets:
+    - name: authors-random
+      labels:
+        version: v1
+      trafficPolicy:
+        loadBalancer:
+          simple: RANDOM

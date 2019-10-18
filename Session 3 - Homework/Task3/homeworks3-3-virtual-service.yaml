@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontend-route-by-user
+spec:
+  hosts:
+    - frontend
+  http:
+    - match:
+        - headers:
+            end-user:
+              exact: viordanov
+      route:
+        - destination:
+            host: frontend-viordanov
+            port:
+              number: 8080
